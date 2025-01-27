@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب معدل الوحدات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+        .form-grid label {
+            grid-column: span 4;
+            font-weight: bold;
+        }
+        .form-grid input {
+            grid-column: span 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7e9;
+            border: 1px solid #c7e3c7;
+            border-radius: 8px;
+        }
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>حساب معدل الوحدات</h1>
+        <form id="gradeForm">
+            <div class="form-grid">
+                <!-- مادة 1 -->
+                <label>Technologies Web avancées</label>
+                <input type="number" id="webExam" placeholder="امتحان" step="0.01">
+                <input type="number" id="webTD" placeholder="أعمال موجهة" step="0.01">
+                <input disabled placeholder="لا توجد أعمال تطبيقية">
+
+                <!-- مادة 2 -->
+                <label>Structures complexes et algorithmique</label>
+                <input type="number" id="algoExam" placeholder="امتحان" step="0.01">
+                <input type="number" id="algoTD" placeholder="أعمال موجهة" step="0.01">
+                <input type="number" id="algoTP" placeholder="أعمال تطبيقية" step="0.01">
+
+                <!-- مادة 3 -->
+                <label>Techniques de représentation de connaissances</label>
+                <input type="number" id="repExam" placeholder="امتحان" step="0.01">
+                <input type="number" id="repTD" placeholder="أعمال موجهة" step="0.01">
+                <input type="number" id="repTP" placeholder="أعمال تطبيقية" step="0.01">
+
+                <!-- مادة 4 -->
+                <label>Intelligence artificielle</label>
+                <input type="number" id="iaExam" placeholder="امتحان" step="0.01">
+                <input type="number" id="iaTD" placeholder="أعمال موجهة" step="0.01">
+                <input disabled placeholder="لا توجد أعمال تطبيقية">
+
+                <!-- مادة 5 -->
+                <label>Bases de données avancées</label>
+                <input type="number" id="dbExam" placeholder="امتحان" step="0.01">
+                <input type="number" id="dbTD" placeholder="أعمال موجهة" step="0.01">
+                <input type="number" id="dbTP" placeholder="أعمال تطبيقية" step="0.01">
+
+                <!-- مادة 6 -->
+                <label>Interaction avancée</label>
+                <input type="number" id="iaExam2" placeholder="امتحان" step="0.01">
+                <input type="number" id="iaTD2" placeholder="أعمال موجهة" step="0.01">
+                <input disabled placeholder="لا توجد أعمال تطبيقية">
+
+                <!-- مادة 7 -->
+                <label>Anglais</label>
+                <input type="number" id="anglais" placeholder="امتحان" step="0.01">
+                <input disabled placeholder="لا توجد أعمال موجهة">
+                <input disabled placeholder="لا توجد أعمال تطبيقية">
+            </div>
+            <button type="button" onclick="calculate()">احسب المعدل</button>
+        </form>
+
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            function calcAvg(exam, td = 0, tp = 0, type) {
+                if (type === 1) return (exam * 0.7) + (td * 0.15) + (tp * 0.15);
+                if (type === 2) return (exam * 0.7) + (td * 0.3);
+                return exam;
+            }
+
+            // حساب المعدلات
+            const webAvg = calcAvg(
+                parseFloat(document.getElementById("webExam").value || 0),
+                parseFloat(document.getElementById("webTD").value || 0),
+                0,
+                2
+            ) * 2; // المعامل 2
+
+            const algoAvg = calcAvg(
+                parseFloat(document.getElementById("algoExam").value || 0),
+                parseFloat(document.getElementById("algoTD").value || 0),
+                parseFloat(document.getElementById("algoTP").value || 0),
+                1
+            ) * 3; // المعامل 3
+
+            const repAvg = calcAvg(
+                parseFloat(document.getElementById("repExam").value || 0),
+                parseFloat(document.getElementById("repTD").value || 0),
+                parseFloat(document.getElementById("repTP").value || 0),
+                1
+            ) * 4; // المعامل 4
+
+            const iaAvg = calcAvg(
+                parseFloat(document.getElementById("iaExam").value || 0),
+                parseFloat(document.getElementById("iaTD").value || 0),
+                0,
+                2
+            ) * 2; // المعامل 2
+
+            const dbAvg = calcAvg(
+                parseFloat(document.getElementById("dbExam").value || 0),
+                parseFloat(document.getElementById("dbTD").value || 0),
+                parseFloat(document.getElementById("dbTP").value || 0),
+                1
+            ) * 3; // المعامل 3
+
+            const ia2Avg = calcAvg(
+                parseFloat(document.getElementById("iaExam2").value || 0),
+                parseFloat(document.getElementById("iaTD2").value || 0),
+                0,
+                2
+            ) * 2; // المعامل 2
+
+            const anglaisAvg = parseFloat(document.getElementById("anglais").value || 0) * 1; // المعامل 1
+
+            // حساب معدلات الوحدات
+            const ued1 = webAvg / 2;
+            const uef1 = (algoAvg + repAvg + iaAvg) / 9; // مجموع المعاملات 3 + 4 + 2 = 9
+            const uem1 = (dbAvg + ia2Avg) / 5; // مجموع المعاملات 3 + 2 = 5
+            const uet1 = anglaisAvg / 1; // المعامل 1
+
+            // المعدل العام
+            const totalAvg = (ued1 + uef1 + uem1 + uet1) / 4; // عدد الوحدات 4
+
+            // عرض النتائج
+            const resultDiv = document.getElementById("result");
+            resultDiv.style.display = "block";
+            resultDiv.innerHTML = `
+                <p><strong>UED1 - Technologies Web avancées:</strong> ${ued1.toFixed(2)}</p>
+                <p><strong>UEF1 - Structures complexes et algorithmique + Techniques de représentation + IA:</strong> ${uef1.toFixed(2)}</p>
+                <p><strong>UEM1 - Bases de données avancées + Interaction avancée:</strong> ${uem1.toFixed(2)}</p>
+                <p><strong>UET1 - Anglais:</strong> ${uet1.toFixed(2)}</p>
+                <hr>
+                <p><strong>المعدل العام:</strong> ${totalAvg.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
